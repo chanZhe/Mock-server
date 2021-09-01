@@ -1,7 +1,7 @@
 # Mock-Server操作文档
 
 ### 现支持数据类型:
-｜ 类型  |  对应数据 |
+| 类型  |  对应数据 |
 | --- | --- |
 | number(min,max) | 整数 |
 | string(length) | 英文字符串 |
