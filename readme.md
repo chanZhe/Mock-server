@@ -38,7 +38,24 @@ db.client = new Client({
 ```
 { "pageData|3-10": [ { "answerAbstract": "string()", "answerId": "number()", "answerLevel": "number(1,8)", "avatar": "string()", "commentCount": "number(0,999)", "headline": "string()", "healthAccountId": "id()", "healthAccountLevel": "number(1,10)", "likeCount": "number(0,999)", "questionId": "id()", "questionTitle": "string()" } ], "pageInfo": { "currentPage": "1", "pageSize":"10", "totalNumber": "number(10,100)", "totalPage": "number(1,10)"} }
 ```
+### create table script: 
+ 
+```
+-- auto-generated definition
+create table api_model
+(
+    id          int auto_increment
+        primary key,
+    name        varchar(100)                        not null,
+    description varchar(200)                        null,
+    res_model   varchar(1000)                       null,
+    update_time timestamp default CURRENT_TIMESTAMP not null,
+    req_model   varchar(1000)                       null,
+    method      varchar(20)                         not null
+)
+    comment '模拟接口模型表';
 
+```
 
 ### 服务器发布:
  npm run prd || pm2 start bin/www
