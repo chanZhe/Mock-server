@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <div class="container-fluid">
+    <header class="row header">
+      <div class="col-md-8 sys-title">
+        mock-server接口平台
+      </div>
+      <input type="text" class="col-md-2 input-sm" placeholder="输入接口路径查询">
+      <div class="col-md-1"></div>
+      <button data-toggle="modal" data-target="#createModal" class="btn-plus btn btn-primary col-md-1">新增接口</button>
+    </header>
+    <section style="margin-top:22px">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"></div>
+      <script id="api-list" type="text/html">
+            {{each data as value i}}
+              <div class="panel panel-default">
+                <div class="panel-heading flex-between" role="tab" id="{{'heading'+i}}">
+                  <h4 class="panel-title">
+                    <span class="label label-info">{{value.method}}</span>
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="{{'#collapse'+i}}" aria-expanded="true" aria-controls="{{'collapse'+i}}">
+                      {{value.name}} {{value.description}}
+                    </a>
+                  </h4>
+                  <div>
+                    <button data-id="{{value.id}}" class="edit-btn btn btn-primary">编辑</button>
+                    <button data-id="{{value.id}}" class="delete-btn btn btn-danger">删除</button>
+                  </div>
+                </div>
+                <div id="{{'collapse'+i}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="{{'heading'+i}}">
+                  <div class="panel-body">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">request body</h3>
+                      </div>
+                      <div class="panel-body">
+                        {{if value.req_model && value.req_model !== ''}}
+                          {{value.req_model}}
+                        {{/if}}
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">response body</h3>
+                      </div>
+                      <div class="panel-body">
+                        {{if value.res_model && value.res_model !== ''}}
+                          {{value.res_model}}
+                        {{/if}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          </script>
+    </section>
+    <!-- 新增弹框 -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="createModalLabel">mock-controller</h4>
+          </div>
+          <div class="modal-body">
+            <form id="createForm" action="/create" method="POST">
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">接口路径:</label>
+                <input type="text" class="form-control" name="name">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">请求方式:</label>
+                <input type="text" class="form-control" name="method">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">描述:</label>
+                <input class="form-control" name="description"></input>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">入参:</label>
+                <textarea class="form-control" name="req_model"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">出参:</label>
+                <textarea class="form-control" name="res_model"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" handle-type="submit" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 编辑弹框 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editlModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="editlModalLabel">mock-controller</h4>
+          </div>
+          <div class="modal-body">
+            <form id="editForm" action="/create" method="POST">
+              <input type="text" name="id" style="display: none;">
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">接口路径:</label>
+                <input type="text" class="form-control" name="name">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="control-label">请求方式:</label>
+                <input type="text" class="form-control" name="method">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">描述:</label>
+                <input class="form-control" name="description"></input>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">入参:</label>
+                <textarea class="form-control" name="req_model"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="control-label">出参:</label>
+                <textarea class="form-control" name="res_model"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" handle-type="edit" class="btn btn-primary">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+  integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/lib/template-web.min.js"></script>
+<script src="./javascripts/index.js"></script>
+</html>
