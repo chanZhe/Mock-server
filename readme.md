@@ -33,5 +33,12 @@ db.client = new Client({
 1. 新增或者修改入参，出参需按照json格式配置,例: {"name":"name()","age":"number(1,99)"}
 2. 接口路径书写格式为相对地址(必传),例: /api/test
 
+### 示例出参配置:
+
+```
+{ "pageData|3-10": [ { "answerAbstract": "string()", "answerId": "number()", "answerLevel": "number(1,8)", "avatar": "string()", "commentCount": "number(0,999)", "headline": "string()", "healthAccountId": "id()", "healthAccountLevel": "number(1,10)", "likeCount": "number(0,999)", "questionId": "id()", "questionTitle": "string()" } ], "pageInfo": { "currentPage": "1", "pageSize":"10", "totalNumber": "number(10,100)", "totalPage": "number(1,10)"} }
+```
+
+
 ### 服务器发布:
  npm run prd || pm2 start bin/www
