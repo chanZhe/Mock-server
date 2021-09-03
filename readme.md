@@ -44,8 +44,7 @@ db.client = new Client({
 -- auto-generated definition
 create table api_model
 (
-    id          int auto_increment
-        primary key,
+    id          int auto_increment primary key,
     name        varchar(100)                        not null,
     description varchar(200)                        null,
     res_model   varchar(1000)                       null,

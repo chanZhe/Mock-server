@@ -14,7 +14,7 @@ $(function () {
         });
         return o;
     };
-    
+
     let api_list = []
 
     // 获取所有api接口
@@ -41,9 +41,9 @@ $(function () {
             url: '/create',
             data: form.serializeObject()
         }).then(res => {
-            if(res.code === '200') {
+            if (res.code === '200') {
                 form[0].reset()
-                form.modal('hide')
+                $("#createModal").modal('hide')
                 getAllApis()
             } else {
                 alert(res.msg)
@@ -51,13 +51,13 @@ $(function () {
         })
     })
 
-    $(document).on('click', '.delete-btn' , function() {
+    $(document).on('click', '.delete-btn', function () {
         const id = $(this).attr('data-id')
         $.post({
             url: '/delete',
-            data: {id}
+            data: { id }
         }).then(res => {
-            if(res.code === '200') {
+            if (res.code === '200') {
                 getAllApis()
             } else {
                 alert(res.msg)
@@ -65,7 +65,7 @@ $(function () {
         })
     })
 
-    $(document).on('click', '.edit-btn', function() {
+    $(document).on('click', '.edit-btn', function () {
         const id = $(this).attr('data-id')
         let api_data = api_list.filter(item => item.id === Number(id))[0]
         console.log(api_data)
@@ -86,13 +86,30 @@ $(function () {
             url: '/edit',
             data: form.serializeObject()
         }).then(res => {
-            if(res.code === '200') {
+            if (res.code === '200') {
                 form[0].reset()
-                form.modal('hide')
+                $("#editModal").modal('hide')
                 getAllApis()
             } else {
                 alert(res.msg)
             }
         })
+    })
+
+    $(".search-input").on("keydown", function (e) {
+        if (e.keyCode === 13) {
+            $.post({
+                url: '/search',
+                data: { query: $(this).val().trim() }
+            }).then(res => {
+                if (res.code === '200') {
+                    api_list = res.data
+                    var html = template('api-list', res)
+                    $('#accordion').html(html)
+                } else {
+                    alert(res.msg)
+                }
+            })
+        }
     })
 })

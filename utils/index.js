@@ -20,9 +20,8 @@ const createMockData = async (ctx) => {
             const valid = !Object.keys(req_valid).length || Object.keys(req_valid).every(req => {
                 return query[req] && query[req] !== ''
             })
-            console.log('valid', valid)
             if (valid) {
-                console.log('res_model type', typeof(response.res_model))
+                console.log('res_model type', JSON.parse(response.res_model))
                 const data = response.res_model && response.res_model !== '' ? await middlewaresMock(JSON.parse(response.res_model)) : {}
                 ctx.response.body = response_pack('200', data)
             } else {
